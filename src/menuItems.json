@@ -1,0 +1,86 @@
+[
+    { "text": "Dashboard", "icon": "DashboardOutlinedIcon", "path": "/" },
+    { "text": "Article", "icon": "ArticleOutlinedIcon", "path": "/article" },
+    { "text": "Auto dealership", "icon": "CachedOutlinedIcon", "path": "/auto-dealership" },
+    { 
+      "text": "Blog", 
+      "icon": "RssFeedOutlinedIcon", 
+      "path": "/blog",
+      "subItems": [
+        { "text": "Blog Category", "path": "/blog/category" },
+        { "text": "Page Blog", "path": "/blog/page" }
+      ]
+    },
+    { 
+      "text": "Career", 
+      "icon": "WorkOutlinedIcon", 
+      "path": "/career",
+      "subItems": [
+        { "text": "Career", "path": "/career/main" },
+        { "text": "Openings", "path": "/career/openings" },
+        { "text": "Category", "path": "/career/category" }
+      ]
+    },
+    { "text": "Country, state, city", "icon": "LocationCityOutlinedIcon", "path": "/location" },
+    { "text": "FAQ's", "icon": "HelpOutlinedIcon", "path": "/faqs" },
+    { 
+      "text": "Free shop news", 
+      "icon": "NewspaperOutlinedIcon", 
+      "path": "/news",
+      "subItems": [
+        { "text": "Free Shop News", "path": "/news/main" },
+        { "text": "Free Shop News Category", "path": "/news/category" }
+      ]
+    },
+    { 
+      "text": "Help Center", 
+      "icon": "SupportOutlinedIcon", 
+      "path": "/help",
+      "subItems": [
+        { "text": "Category", "path": "/help/category" },
+        { "text": "Help Center Knowledge", "path": "/help/knowledge" }
+      ]
+    },
+    { 
+      "text": "How it works", 
+      "icon": "SettingsOutlinedIcon", 
+      "path": "/how-it-works",
+      "subItems": [
+        { "text": "How it Works", "path": "/how-it-works/main" },
+        { "text": "Bottom How it Works", "path": "/how-it-works/bottom" }
+      ]
+    },
+    { 
+      "text": "Jobs", 
+      "icon": "BusinessCenterOutlinedIcon", 
+      "path": "/jobs",
+      "subItems": [
+        { "text": "Service", "path": "/jobs/service" },
+        { "text": "Jobs", "path": "/jobs/list" }
+      ]
+    },
+    { 
+      "text": "Press", 
+      "icon": "AnnouncementOutlinedIcon", 
+      "path": "/press",
+      "subItems": [
+        { "text": "News Category", "path": "/press/category" },
+        { "text": "Topic", "path": "/press/topic" },
+        { "text": "News", "path": "/press/news" }
+      ]
+    },
+    { 
+      "text": "Product", 
+      "icon": "SecurityOutlinedIcon", 
+      "path": "/product",
+      "subItems": [
+        { "text": "Category", "path": "/product/category" },
+        { "text": "Sub Category", "path": "/product/subcategory" },
+        { "text": "Condition", "path": "/product/condition" },
+        { "text": "Product", "path": "/product/list" }
+      ]
+    },
+    { "text": "Privacy & Terms", "icon": "GavelOutlinedIcon", "path": "/privacy-terms" },
+    { "text": "Trust & safety", "icon": "SecurityOutlinedIcon", "path": "/trust-safety" }
+  ]
+  

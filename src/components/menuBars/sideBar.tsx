@@ -10,6 +10,9 @@ import {
   Drawer,
   Collapse,
 } from '@mui/material';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+// iconMap.ts
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
@@ -24,94 +27,36 @@ import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlin
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import GavelOutlinedIcon from '@mui/icons-material/GavelOutlined';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import menuJson from '../../menuItems.json';
+export const iconMap: Record<string, any> = {
+  DashboardOutlinedIcon: <DashboardOutlinedIcon />,
+  ArticleOutlinedIcon: <ArticleOutlinedIcon />,
+  CachedOutlinedIcon: <CachedOutlinedIcon />,
+  RssFeedOutlinedIcon: <RssFeedOutlinedIcon />,
+  WorkOutlinedIcon: <WorkOutlinedIcon />,
+  LocationCityOutlinedIcon: <LocationCityOutlinedIcon />,
+  HelpOutlinedIcon: <HelpOutlinedIcon />,
+  NewspaperOutlinedIcon: <NewspaperOutlinedIcon />,
+  SupportOutlinedIcon: <SupportOutlinedIcon />,
+  SettingsOutlinedIcon: <SettingsOutlinedIcon />,
+  BusinessCenterOutlinedIcon: <BusinessCenterOutlinedIcon />,
+  AnnouncementOutlinedIcon: <AnnouncementOutlinedIcon />,
+  SecurityOutlinedIcon: <SecurityOutlinedIcon />,
+  GavelOutlinedIcon: <GavelOutlinedIcon />,
+};
 
-const menuItems = [
-  { text: 'Dashboard', icon: <DashboardOutlinedIcon />, path: '/' },
-  { text: 'Article', icon: <ArticleOutlinedIcon />, path: '/article' },
-  { text: 'Auto dealership', icon: <CachedOutlinedIcon />, path: '/auto-dealership' },
-  { 
-    text: 'Blog', 
-    icon: <RssFeedOutlinedIcon />, 
-    path: '/blog',
-    subItems: [
-      { text: 'Blog Category', path: '/blog/category' },
-      { text: 'Page Blog', path: '/blog/page' }
-    ]
-  },
-  { 
-    text: 'Career', 
-    icon: <WorkOutlinedIcon />, 
-    path: '/career',
-    subItems: [
-      { text: 'Career', path: '/career/main' },
-      { text: 'Openings', path: '/career/openings' },
-      { text: 'Category', path: '/career/category' }
-    ]
-  },
-  { text: 'Country, state, city', icon: <LocationCityOutlinedIcon />, path: '/location' },
-  { text: "FAQ's", icon: <HelpOutlinedIcon />, path: '/faqs' },
-  { 
-    text: 'Free shop news', 
-    icon: <NewspaperOutlinedIcon />, 
-    path: '/news',
-    subItems: [
-      { text: 'Free Shop News', path: '/news/main' },
-      { text: 'Free Shop News Category', path: '/news/category' }
-    ]
-  },
-  { 
-    text: 'Help Center', 
-    icon: <SupportOutlinedIcon />, 
-    path: '/help',
-    subItems: [
-      { text: 'Category', path: '/help/category' },
-      { text: 'Help Center Knowledge', path: '/help/knowledge' }
-    ]
-  },
-  { 
-    text: 'How it works', 
-    icon: <SettingsOutlinedIcon />, 
-    path: '/how-it-works',
-    subItems: [
-      { text: 'How it Works', path: '/how-it-works/main' },
-      { text: 'Bottom How it Works', path: '/how-it-works/bottom' }
-    ]
-  },
-  { 
-    text: 'Jobs', 
-    icon: <BusinessCenterOutlinedIcon />, 
-    path: '/jobs',
-    subItems: [
-      { text: 'Service', path: '/jobs/service' },
-      { text: 'Jobs', path: '/jobs/list' }
-    ]
-  },
-  { 
-    text: 'Press', 
-    icon: <AnnouncementOutlinedIcon />, 
-    path: '/press',
-    subItems: [
-      { text: 'News Category', path: '/press/category' },
-      { text: 'Topic', path: '/press/topic' },
-      { text: 'News', path: '/press/news' }
-    ]
-  },
-  { 
-    text: 'Product', 
-    icon: <SecurityOutlinedIcon />, 
-    path: '/product',
-    subItems: [
-      { text: 'Category', path: '/product/category' },
-      { text: 'Sub Category', path: '/product/subcategory' },
-      { text: 'Condition', path: '/product/condition' },
-      { text: 'Product', path: '/product/list' }
-    ]
-  },
-  { text: 'Privacy & Terms', icon: <GavelOutlinedIcon />, path: '/privacy-terms' },
-  { text: 'Trust & safety', icon: <SecurityOutlinedIcon />, path: '/trust-safety' },
-];
+
+type SubItem = {
+  text: string;
+  path: string;
+};
+
+type MenuItem = {
+  text: string;
+  icon: string;
+  path: string;
+  subItems?: SubItem[];
+};
 
 const LeftSideBar: React.FC = () => {
   const drawerWidth = 430;
@@ -120,21 +65,27 @@ const LeftSideBar: React.FC = () => {
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState<string>('');
 
+  const menuItems: MenuItem[] = menuJson;
+
   useEffect(() => {
     const currentPath = location.pathname;
-    const currentMenuItem = menuItems.find(item => item.path === currentPath);
+    const currentMenuItem = menuItems.find(item =>
+      item.path === currentPath ||
+      item.subItems?.some(sub => sub.path === currentPath)
+    );
     if (currentMenuItem) {
-      setSelectedItem(currentMenuItem.text);
+      setSelectedItem(currentPath);
+      if (currentMenuItem.subItems) setOpenSubmenu(currentMenuItem.text);
     }
   }, [location.pathname]);
 
-  const handleMenuItemClick = (text: string, path: string, hasSubItems?: boolean) => {
-    if (hasSubItems) {
-      setOpenSubmenu(prevOpen => prevOpen === text ? '' : text);
+  const handleMenuItemClick = (item: MenuItem) => {
+    if (item.subItems) {
+      setOpenSubmenu(prevOpen => prevOpen === item.text ? '' : item.text);
     } else {
-      setSelectedItem(text);
-      setOpenSubmenu(''); // Close any open submenu when navigating
-      navigate(path);
+      setSelectedItem(item.path);
+      setOpenSubmenu('');
+      navigate(item.path);
     }
   };
 
@@ -156,9 +107,7 @@ const LeftSideBar: React.FC = () => {
       <Box sx={{
         overflow: 'auto',
         mt: 2,
-        '&::-webkit-scrollbar': {
-          display: 'none'
-        },
+        '&::-webkit-scrollbar': { display: 'none' },
         msOverflowStyle: 'none',
         scrollbarWidth: 'none',
       }}>
@@ -170,47 +119,31 @@ const LeftSideBar: React.FC = () => {
             <React.Fragment key={item.text}>
               <ListItem disablePadding>
                 <ListItemButton
-                  selected={selectedItem === item.text}
-                  onClick={() => handleMenuItemClick(item.text, item.path, !!item.subItems)}
+                  selected={selectedItem === item.path}
+                  onClick={() => handleMenuItemClick(item)}
                   sx={{
                     '&.Mui-selected': {
                       backgroundColor: '#199FB1',
                       borderRadius: '10px',
-                      '&:hover': {
-                        backgroundColor: '#199FB1',
-                      },
-                      '& .MuiListItemIcon-root': {
-                        color: '#fff',
-                      },
-                      '& .MuiTypography-root': {
-                        color: '#fff',
-                        fontWeight: 600,
-                      },
+                      '& .MuiListItemIcon-root, & .MuiTypography-root': { color: '#fff' },
+                      '& .MuiTypography-root': { fontWeight: 600 }
                     },
                     '&:hover': {
                       backgroundColor: '#199FB1',
                       borderRadius: '10px',
-                      '& .MuiListItemIcon-root': {
-                        color: '#fff',
-                      },
-                      '& .MuiTypography-root': {
-                        color: '#fff',
-                      },
+                      '& .MuiListItemIcon-root, & .MuiTypography-root': { color: '#fff' },
                     },
                   }}
                 >
-                  <ListItemIcon sx={{
-                    color: selectedItem === item.text ? '#fff' : 'text.primary',
-                    minWidth: '45px'
-                  }}>
-                    {item.icon}
+                  <ListItemIcon sx={{ minWidth: '45px' }}>
+                    {iconMap[item.icon] || null}
                   </ListItemIcon>
                   <ListItemText
                     primary={item.text}
                     primaryTypographyProps={{
                       style: {
                         fontSize: '0.95rem',
-                        fontWeight: selectedItem === item.text ? 600 : 500
+                        fontWeight: selectedItem === item.path ? 600 : 500
                       }
                     }}
                   />
@@ -219,6 +152,7 @@ const LeftSideBar: React.FC = () => {
                   )}
                 </ListItemButton>
               </ListItem>
+
               {item.subItems && (
                 <Collapse in={openSubmenu === item.text} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
@@ -226,11 +160,20 @@ const LeftSideBar: React.FC = () => {
                       <ListItemButton
                         key={subItem.text}
                         onClick={() => {
-                          setSelectedItem(subItem.text);
+                          setSelectedItem(subItem.path);
                           navigate(subItem.path);
                         }}
+                        selected={selectedItem === subItem.path}
                         sx={{
                           pl: 7,
+                          '&.Mui-selected': {
+                            backgroundColor: '#199FB1',
+                            borderRadius: '10px',
+                            '& .MuiTypography-root': {
+                              color: '#fff',
+                              fontWeight: 600
+                            },
+                          },
                           '&:hover': {
                             backgroundColor: '#199FB1',
                             borderRadius: '10px',
@@ -240,13 +183,9 @@ const LeftSideBar: React.FC = () => {
                           },
                         }}
                       >
-                        <ListItemText 
+                        <ListItemText
                           primary={subItem.text}
-                          primaryTypographyProps={{
-                            style: {
-                              fontSize: '0.9rem',
-                            }
-                          }}
+                          primaryTypographyProps={{ style: { fontSize: '0.9rem' } }}
                         />
                       </ListItemButton>
                     ))}
