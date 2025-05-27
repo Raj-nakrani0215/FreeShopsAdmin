@@ -76,7 +76,7 @@ const Header: React.FC = () => {
           />
           <Box>
             <Box sx={{ fontWeight: 500 }}>{user?.fullName || "User"}</Box>
-            <Box sx={{ fontSize: '0.875rem', color: '#757575', display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
+            <Box sx={{ fontSize: '0.875rem', color: '#757575', display: 'flex', alignItems: 'center',justifyContent: 'space-between',gap:'10px' }}>
               {user?.userType || "Guest"}
               <Box sx={{color: '#757575', display: 'flex', alignItems: 'center',border:'1px solid #757575',borderRadius:'50%',padding:'0',margin:'0' }}>
               <KeyboardArrowDown sx={{ fontSize:'16px', color: '#757575', margin:'0', padding:'0' }} />

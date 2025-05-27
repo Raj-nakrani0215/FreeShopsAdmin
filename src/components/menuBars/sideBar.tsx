@@ -162,8 +162,8 @@ const LeftSideBar: React.FC = () => {
         msOverflowStyle: 'none',
         scrollbarWidth: 'none',
       }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-          <img src="assets/Logo.png" alt="Free Shops" style={{ width: '50px', height: '50px' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'start', mb: 1 }}>
+          <img src="assets/Logo.png" alt="Free Shops" style={{ width: '60px', height: '60px' }} />
         </Box>
         <List>
           {menuItems.map((item) => (
